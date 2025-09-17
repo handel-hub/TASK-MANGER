@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer type="module" src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <h2>TASK MANAGER</h2>
+        <div>
+            <div>
+                qote
+            </div>
+            <button type="button">DARK MODE</button>
+        </div>
+
+    </header>
+    <div id="search">
+        <input type="search" name="searchTask" id="searchTask" placeholder="searchTask">
+    </div>
+    <!--task form-->
+    <section id="formSection">
+        <form >
+            <div class="formPos">
+                <label for="task">Task</label>
+                <input type="text" name="task" id="taskText">
+            </div>
+            <div class="formPos">
+                <label for="text">Task Description</label>
+                <textarea name="taskDescription" id="taskDescription"></textarea>
+            </div>
+            <div id="formCate">
+            <label for="category">Category</label>
+            <select name="category" id="category" aria-placeholder="category">
+                <option value=""></option>
+                <option value="work">WORK</option>
+                <option value="fun">FUN</option>
+                <option value="family">family</option>
+            </select>
+            </div>
+            <div id="submitDiv">
+                <button type="button" id="submit">Add Task</button>
+            </div>
+        </form>
+    </section>
+    <!--task container-->
+    <section>
+        <ul id="taskContainer">
+
+        </ul>
+    </section>
+</body>
+</html>
