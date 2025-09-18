@@ -11,29 +11,51 @@ export class TaskAdder{
    #saveTask(){
         localStorage.setItem("tasks",JSON.stringify(this.tasks));
     }
-    getTask(){
+    static getTask(){
         return this.tasks
     }
 }
 export class TaskFilter {
 static taskId(id){
-    const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
-    return tasks.filter((elem)=>{
-        return elem.id===id?elem:console.log('task not found')
-    })
+
+    
 }
 static taskIdIndex(id){
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
-    return tasks.findIndex((elem)=>{
-        return elem.id===id?elem:console.log('task not found')
-    })
+    const index=tasks.findIndex((elem)=>elem.id===id)
+        if (index == -1){
+        console.log('task not found')
+    }
+    return index
 }
 }
 export class TaskDelete {
 static taskdel(id){
     const filteredTask=TaskFilter.taskIdIndex(id)
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
-    tasks.splice(filteredTask,1)
+    const deletedtask= tasks.splice(filteredTask,1)
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+    localStorage.setItem('deletedtask',JSON.stringify(deletedtask))||[]
 }
 
+}
+export class TaskComplete {
+    static complete(id){
+    const filteredTask=TaskFilter.taskIdIndex(id)
+    const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+    const task=tasks[filteredTask]     
+    task.complete=true
+    TaskDelete.taskdel(id)
+    localStorage.setItem('completedtask',JSON.stringify(task))||[]
+    }
+}
+export class TaskStat{
+    static completedStat(){
+        const completedtasks=JSON.parse(localStorage.getItem('completedtask'))||[]
+        return completedtasks.length
+    }
+    static pendingStat(){
+        const pendingStats=JSON.parse(localStorage.getItem('tasks'))||[]
+        return pendingStats.length
+    }
 }
