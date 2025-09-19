@@ -1,5 +1,5 @@
 import { api } from "./modules/api.js";
-import { TaskAdder,TaskComplete,TaskDelete } from "./modules/taskManger.js";
+import { TaskAdder,TaskComplete,TaskStat,TaskFilter } from "./modules/taskManger.js";
 const taskEl=document.getElementById('taskText')
 const taskLists=document.getElementById('taskContainer')
 const taskDesEl=document.getElementById("taskDescription")
@@ -35,6 +35,9 @@ function taskContainer() {
     const btn=document.createElement('button')
         btn.classList.add('completeButton')
         btn.textContent="complete"
+    const editBtn=document.createElement('button')
+        editBtn.classList.add('editButton')
+        editBtn.textContent="edit task"
     const divContainer=document.createElement('div');
         divContainer.classList.add('divContainer')
         divContainer.appendChild(divTask)
@@ -42,10 +45,11 @@ function taskContainer() {
         divContainer.appendChild(divCate)
         divContainer.appendChild(id)
         divContainer.appendChild(btn)
+        divContainer.appendChild(editBtn)
         li.appendChild(divContainer)
         frag.appendChild(li)
     });
-   return taskLists.appendChild(frag)
+    return taskLists.appendChild(frag)
 }
 taskContainer()
 export function show() {
@@ -54,26 +58,81 @@ export function show() {
     div.setAttribute('id','spinner')
     sep.appendChild(div)
 }
-
 export function hide() {
     const div=document.getElementById('spinner')
     div.id=''
 }
- const completeButton=document.getElementsByClassName('completeButton')
-   Array.from(completeButton).forEach((elem )=>{
-          elem.addEventListener('click',complete) 
-  })
-  function complete(e){
-             const target=e.target.previousElementSibling
-             const id=target.innerText
-             console.log(id)
-             const b=JSON.parse(localStorage.getItem("tasks")) || [];
-             console.log(localStorage)
-             console.log(b)
-             TaskComplete.complete(id)
-             taskContainer()
-         }
-//not continous
-//
-//
-//not continous the 
+const completeButton=document.getElementsByClassName('completeButton')
+Array.from(completeButton).forEach((elem )=>{
+    elem.addEventListener('click',complete) 
+})
+function complete(e){
+    const target=e.target.previousElementSibling
+    const id=target.innerText
+    console.log(id)
+    const b=JSON.parse(localStorage.getItem("tasks")) || [];
+    console.log(localStorage)
+    console.log(b)
+    TaskComplete.complete(id)
+    taskStat()
+    completeSection()
+}
+function completeSection(){
+    const completedSection=document.getElementById('completedSection')
+    const frag=document.createDocumentFragment()
+    const completedTask=JSON.parse(localStorage.getItem('completedTasks'))||[]
+    completedTask.forEach(elem=>{
+        const li=document.createElement('li')
+        const task=document.createElement('div')
+        task.classList.add('completedTask')
+        task.innerText=elem.task
+        const description=document.createElement('div')
+        description.classList.add('completedDescription')
+        description.innerText=elem.description
+        const category=document.createElement('div')
+        category.classList.add('completedCategory')
+        category.innerText=elem.category
+        const completeDiv=document.createElement('div')
+        completeDiv.classList.add('completeDiv')
+        completeDiv.appendChild(task)
+        completeDiv.appendChild(description)
+        completeDiv.appendChild(category)
+        li.appendChild(completeDiv)
+        frag.appendChild(li)
+        
+    })
+    console.log(frag)
+    return completedSection.appendChild(frag)
+}
+completeSection()
+function taskStat() {
+    const frag=document.createDocumentFragment()
+    const completeStat=TaskStat.completedStat()
+    const pendingStat=TaskStat.pendingStat()
+    const statElContainer=document.getElementById('stats')
+    const completeEl=document.createElement('div')
+    completeEl.innerText=completeStat
+    completeEl.id='completeStat'
+    const pendingEl=document.createElement('div')
+    pendingEl.innerText=pendingStat
+    pendingEl.id='pendingStat'
+    frag.appendChild(completeEl)
+    frag.appendChild(pendingEl)
+    statElContainer.appendChild(frag)
+}
+taskStat()
+const editBtn=document.getElementsByClassName('editButton')
+Array.from(editBtn).forEach((elem)=>{
+    elem.addEventListener('click',editTask)
+})
+function editTask(e) {
+    const parent=e.target.parentElement
+    const taskEl=parent.firstElementChild
+    const task=taskEl.innerText
+    const descriptionEl=taskEl.nextElementSibling
+    const description=descriptionEl.innerText
+    const categoryEl=descriptionEl.nextElementSibling
+    const category=categoryEl
+    const filteredTask=TaskFilter.filtered()
+
+}

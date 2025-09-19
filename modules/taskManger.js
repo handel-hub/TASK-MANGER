@@ -8,7 +8,7 @@ export class TaskAdder{
         this.tasks.push(newTask);
         this.#saveTask()
     }
-   #saveTask(){
+    #saveTask(){
         localStorage.setItem("tasks",JSON.stringify(this.tasks));
     }
     static getTask(){
@@ -16,14 +16,18 @@ export class TaskAdder{
     }
 }
 export class TaskFilter {
-static taskId(id){
-
-    
+static filtered(id){
+    const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+    const filteredTask=tasks.filter(elem=>{elem.id===id})
+    if (filteredTask == -1) {
+        console.log('task not found')
+    }
+    return filteredTask
 }
 static taskIdIndex(id){
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
     const index=tasks.findIndex((elem)=>elem.id===id)
-        if (index == -1){
+    if (index == -1){
         console.log('task not found')
     }
     return index
@@ -33,9 +37,11 @@ export class TaskDelete {
 static taskdel(id){
     const filteredTask=TaskFilter.taskIdIndex(id)
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
-    const deletedtask= tasks.splice(filteredTask,1)
+    const deleteTask= tasks.splice(filteredTask,1)
     localStorage.setItem('tasks',JSON.stringify(tasks))
-    localStorage.setItem('deletedtask',JSON.stringify(deletedtask))||[]
+    const deletedTasks=JSON.parse(localStorage.getItem("deletedTask")) || [];
+    deletedTasks.push(deleteTask)
+    localStorage.setItem('deletedTask',JSON.stringify(deletedTasks))
 }
 
 }
@@ -43,15 +49,18 @@ export class TaskComplete {
     static complete(id){
     const filteredTask=TaskFilter.taskIdIndex(id)
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
-    const task=tasks[filteredTask]     
+    const task=tasks[filteredTask] 
+    console.log(filteredTask)    
     task.complete=true
     TaskDelete.taskdel(id)
-    localStorage.setItem('completedtask',JSON.stringify(task))||[]
+    const completedTasks=JSON.parse(localStorage.getItem('completedTasks'))||[]
+    completedTasks.push(task)
+    localStorage.setItem('completedTasks',JSON.stringify(completedTasks))
     }
 }
 export class TaskStat{
     static completedStat(){
-        const completedtasks=JSON.parse(localStorage.getItem('completedtask'))||[]
+        const completedtasks=JSON.parse(localStorage.getItem('completedTasks'))||[]
         return completedtasks.length
     }
     static pendingStat(){
