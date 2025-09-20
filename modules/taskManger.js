@@ -19,7 +19,18 @@ export class TaskFilter {
 static filtered(id){
     const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
     const filteredTask=tasks.filter(elem=>{elem.id===id})
-    if (filteredTask == -1) {
+    if (filteredTask.length=0) {
+        console.log('task not found')
+    }
+    return filteredTask
+}
+static filterTask(task){
+    const tasks=JSON.parse(localStorage.getItem("tasks"))||[];
+    const filteredTask=tasks.filter((element )=> {
+        console.log(element.task)
+        return element.task.includes(task)
+    });
+    if (filteredTask.length==0) {
         console.log('task not found')
     }
     return filteredTask

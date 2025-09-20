@@ -23,9 +23,11 @@ function taskContainer() {
     const id=document.createElement('div')
         id.innerText=element.id
         id.classList.add('id')
+    const labelTask=document.createElement('label')
     const divTask=document.createElement('div');
         divTask.innerText=element.task
         divTask.classList.add('task')
+        labelTask.append(divTask)
     const divDes=document.createElement('div');
         divDes.innerText=element.description
         divDes.classList.add('description')
@@ -101,7 +103,6 @@ function completeSection(){
         frag.appendChild(li)
         
     })
-    console.log(frag)
     return completedSection.appendChild(frag)
 }
 completeSection()
@@ -121,7 +122,7 @@ function taskStat() {
     statElContainer.appendChild(frag)
 }
 taskStat()
-const editBtn=document.getElementsByClassName('editButton')
+/*const editBtn=document.getElementsByClassName('editButton')
 Array.from(editBtn).forEach((elem)=>{
     elem.addEventListener('click',editTask)
 })
@@ -132,7 +133,45 @@ function editTask(e) {
     const descriptionEl=taskEl.nextElementSibling
     const description=descriptionEl.innerText
     const categoryEl=descriptionEl.nextElementSibling
-    const category=categoryEl
-    const filteredTask=TaskFilter.filtered()
+    const category=categoryEl.innerText
+    const idEl=categoryEl.nextElementSibling
+    const id=idEl.innerText
+    const filteredTask=TaskFilter.filtered(id)
 
+
+}
+function editForm() {
+    const form=document.createElement('form')
+    const task=document.createElement('input')
+    const description=document.createElement('textarea')
+    const category=document
+}
+ */
+const searchTask=document.getElementById('searchTask')
+searchTask.addEventListener('keyup',search)
+function search(e){
+    const searchDiv=document.getElementById('search')
+    const value=e.target.value
+    const tasks=TaskFilter.filterTask(value)
+    const frag=document.createDocumentFragment()
+    tasks.forEach(elem=>{
+        const li=document.createElement('li')
+        const task=document.createElement('div')
+        task.classList.add('filterTask')
+        task.innerText=elem.task
+        const description=document.createElement('div')
+        description.classList.add('filterDescription')
+        description.innerText=elem.description
+        const category=document.createElement('div')
+        category.classList.add('filterCategory')
+        category.innerText=elem.category
+        const filterDiv=document.createElement('div')
+        filterDiv.classList.add('filterDiv')
+        filterDiv.appendChild(task)
+        filterDiv.appendChild(description)
+        filterDiv.appendChild(category)
+        li.appendChild(filterDiv)
+        frag.appendChild(li)
+    })
+    return searchDiv.append(frag)
 }

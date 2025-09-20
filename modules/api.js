@@ -1,4 +1,4 @@
-//import {  } from "";
+import { show, hide } from "../main.js";
 export async function api(API_URL) {
     const url=API_URL
     show()
