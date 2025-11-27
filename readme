@@ -1,0 +1,37 @@
+
+---
+
+# **2️⃣ TASK‑MANGER README**
+
+```markdown
+# TASK-MANGER
+
+## Overview
+**TASK-MANGER** is a project demonstrating a full-stack application structure with both frontend and backend components.  
+It’s designed to manage tasks efficiently and showcases skills in web development, API design, and data handling.
+
+Even though the backend may not be fully complete, this project shows **full-stack awareness** and the ability to integrate multiple components into a cohesive system.
+
+---
+
+## Features
+- Task creation, update, and deletion
+- Persistent storage for task management
+- Frontend interface for task viewing and interaction
+- Modular architecture separating frontend and backend
+- Demonstrates basic API handling and request/response flow
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js v14+  
+- npm v6+  
+- Browser for frontend interface
+
+### Installation
+```bash
+git clone https://github.com/handel-hub/TASK-MANGER.git
+cd TASK-MANGER
+npm install
